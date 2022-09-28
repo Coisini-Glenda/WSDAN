@@ -1,1 +1,1 @@
-# WSDAN-for-medical-visual-question-answering
+# WSDAN-for-MVQA

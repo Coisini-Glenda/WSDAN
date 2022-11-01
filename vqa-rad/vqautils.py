@@ -335,7 +335,7 @@ class MultiHeadedSelfAttention(nn.Module):
         assert n_dims > 1 and n_dims < len(s)
         return x.view(*s[:-n_dims], -1)
 
-class CTDN(nn.Module):
+class DAL(nn.Module):
     def __init__(self, args):
         super().__init__()
         
@@ -381,11 +381,11 @@ class CTDN(nn.Module):
         y = self.normy3(y + self.dropy3(self.FFN_coy[layer_num](y)))
         return x, y
 
-class MCTDN(nn.Module):
+class WSDAN(nn.Module):
     def __init__(self, args):
         super().__init__()
         self.args = args
-        self.blocks = CTDN(args)
+        self.blocks = DAL(args)
         self.n_layers = args.n_layers
         self.question_embedding = Embedding(args).to(device)
         self.visual_embedding = Transfer(args).to(device)

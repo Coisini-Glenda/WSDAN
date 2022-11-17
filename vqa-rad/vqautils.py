@@ -403,7 +403,7 @@ class Model(nn.Module):
     def __init__(self, args):
         super().__init__()
         self.args = args
-        self.mcade = MCTDN(args).to(device)
+        self.wsdan = WSDAN(args).to(device)
         self.fusion = nn.Linear(25, 1).to(device)
 
         self.classifer = nn.Sequential(nn.Linear(args.hidden_size, args.hidden_size),
@@ -411,7 +411,7 @@ class Model(nn.Module):
                                        nn.Linear(args.hidden_size, 1749)).to(device)
 
     def forward(self, img, sens, tokens, question_mask, img_mask):
-        h = self.mcade(img, sens, tokens, question_mask, img_mask)  
+        h = self.wsdan(img, sens, tokens, question_mask, img_mask)  
         h = h.permute(0, 2, 1)
         pooled_h = self.fusion(h).squeeze(2)
         logits = self.classifer(pooled_h)
